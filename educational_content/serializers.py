@@ -16,3 +16,19 @@ class LessonsSerializer(serializers.ModelSerializer):
             'viewing_status',
             'viewing_time',
         )
+
+
+class LessonsByCourseSerializer(serializers.ModelSerializer):
+    viewing_status = serializers.CharField()
+    viewing_time = serializers.CharField()
+    last_viewing_time = serializers.CharField()
+
+    class Meta:
+        model = Lesson
+
+        fields = (
+            'title',
+            'viewing_status',
+            'viewing_time',
+            'last_viewing_time',
+        )
