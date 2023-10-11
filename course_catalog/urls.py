@@ -5,7 +5,7 @@ from . import views
 
 router = DefaultRouter()
 
-# router.register(r'lessons', views.LessonsViewSet, basename='lesson')
+router.register(r'courses', views.CoursesStatistic, basename='course')
 
 urlpatterns = [
     path('', include(router.urls)),
