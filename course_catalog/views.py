@@ -74,6 +74,31 @@ class CoursesStatistic(viewsets.ViewSet):
         #             distinct=True
         #         ),
         #
+        #         total_view_time=Subquery(
+        #             total_view_time.values('total_view_time'),
+        #             output_field=IntegerField()
+        #         ),
+        #
+        #         access_users_on_product_count=Count(
+        #             'accesses',
+        #             filter=Q(accesses__is_valid=True),
+        #             distinct=True
+        #         ),
+        #
+        #         percent_users_buy=F('access_users_on_product_count') / float(total_users_count) * 100
+        #     )
+        # )
+
+        # queryset = (
+        #     Course.objects.all()
+        #
+        #     .annotate(
+        #         viewed_lessons_count=Count(
+        #             'lessons__views',
+        #             filter=Q(lessons__views__viewing_status=ViewingStatusChoices.VIEWED),
+        #             distinct=True
+        #         ),
+        #
         #         total_view_time=Sum('lessons__views__viewing_time'),
         #
         #         access_users_on_product_count=Count(
