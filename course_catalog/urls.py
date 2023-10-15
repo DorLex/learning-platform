@@ -1,13 +1,7 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
+from django.urls import path
 
 from . import views
 
-router = DefaultRouter()
-
-# router.register(r'courses', views.CoursesStatistic, basename='course')
-
 urlpatterns = [
-    path('courses-statistic/', views.CoursesStatistic.as_view({'get': 'list'})),
-    # path('', include(router.urls)),
+    path('courses-statistic/', views.CoursesStatisticAPIView.as_view()),
 ]
