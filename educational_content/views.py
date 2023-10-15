@@ -17,6 +17,7 @@ class LessonsAPIView(APIView):
 
 
 class LessonsByCourseAPIView(APIView):
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, course_id):
         queryset = get_lessons_by_course(request.user, course_id)

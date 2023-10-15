@@ -54,13 +54,11 @@ def get_access_users_on_product_count_for_subquery():
     return access_users_on_product_count_for_subquery
 
 
-def get_courses():
+def get_courses_statistic():
     total_users_count = get_total_users_count()
 
     viewed_lessons_count_for_subquery = get_viewed_lessons_count_for_subquery()
-
     total_view_time_for_subquery = get_total_view_time_for_subquery()
-
     access_users_on_product_count_for_subquery = get_access_users_on_product_count_for_subquery()
 
     queryset = (
