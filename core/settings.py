@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'debug_toolbar',
     'rest_framework',
+    'rest_framework_simplejwt',
 
     'course_catalog',
     'educational_content',
@@ -130,3 +131,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
