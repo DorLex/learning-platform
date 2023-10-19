@@ -2,6 +2,12 @@ from rest_framework import serializers
 from educational_content.models import Lesson
 
 
+class LessonsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lesson
+        fields = '__all__'
+
+
 class LessonsWithInfoSerializer(serializers.ModelSerializer):
     course = serializers.CharField()
     viewing_status = serializers.CharField()
