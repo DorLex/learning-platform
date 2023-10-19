@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import Lesson
+from educational_content.models import Lesson
 
 
-class LessonsSerializer(serializers.ModelSerializer):
+class LessonsWithInfoSerializer(serializers.ModelSerializer):
     course = serializers.CharField()
     viewing_status = serializers.CharField()
     viewing_time = serializers.IntegerField()
@@ -18,7 +18,7 @@ class LessonsSerializer(serializers.ModelSerializer):
         )
 
 
-class LessonsByCourseSerializer(serializers.ModelSerializer):
+class LessonsWithInfoByCourseSerializer(serializers.ModelSerializer):
     viewing_status = serializers.CharField()
     viewing_time = serializers.IntegerField()
     last_viewing_time = serializers.DateTimeField()

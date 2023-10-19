@@ -27,8 +27,8 @@ urlpatterns = [
     path('api/v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/v1/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 
-    path('api/v1/course_catalog/', include('course_catalog.urls')),
-    path('api/v1/educational_content/', include('educational_content.urls')),
+    path('api/v1/course-catalog/', include('course_catalog.urls')),
+    path('api/v1/educational-content/', include('educational_content.urls')),
 ]
 
 if settings.DEBUG:
