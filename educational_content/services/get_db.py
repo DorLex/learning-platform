@@ -11,7 +11,7 @@ def get_access_courses(user):
     return access_courses
 
 
-def get_lessons(user):
+def get_lessons_with_view_info(user):
     access_courses = get_access_courses(user)
 
     queryset = (

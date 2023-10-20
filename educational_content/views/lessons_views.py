@@ -4,14 +4,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from educational_content.serializers import lessons_serializers
-from educational_content.services.get_db import get_lessons, get_lessons_by_course
+from educational_content.services.get_db import get_lessons_with_view_info, get_lessons_by_course
 
 
 class LessonsAPIView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        queryset = get_lessons(request.user)
+        queryset = get_lessons_with_view_info(request.user)
         serializer = lessons_serializers.LessonsWithInfoSerializer(queryset, many=True)
 
         return Response(serializer.data)

@@ -1,3 +1,4 @@
+from rest_framework import status
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -11,7 +12,30 @@ class LessonAPIView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, lesson_id):
-        queryset = get_object_or_404(Lesson, pk=lesson_id)
-        serializer = lessons_serializers.LessonsSerializer(queryset)
+        obj = get_object_or_404(Lesson, pk=lesson_id)
+        serializer = lessons_serializers.LessonsSerializer(obj)
 
         return Response(serializer.data)
+
+    def put(self, request, lesson_id):
+        obj = get_object_or_404(Lesson, pk=lesson_id)
+        serializer = lessons_serializers.LessonsSerializer(obj, request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data)
+
+    def patch(self, request, lesson_id):
+        obj = get_object_or_404(Lesson, pk=lesson_id)
+        serializer = lessons_serializers.LessonsSerializer(obj, request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data)
+
+    def delete(self, request, lesson_id):
+        obj = get_object_or_404(Lesson, pk=lesson_id)
+        obj.delete()
+        serializer = lessons_serializers.LessonsSerializer(obj)
+
+        return Response(serializer.data, status.HTTP_204_NO_CONTENT)
