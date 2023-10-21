@@ -5,7 +5,7 @@ from educational_content.models import Lesson
 
 
 class LessonsSerializer(serializers.ModelSerializer):
-    courses = serializers.SlugRelatedField(slug_field='title', many=True, queryset=Course.objects.all())
+    # courses = serializers.SlugRelatedField(slug_field='title', many=True, queryset=Course.objects.all())
 
     class Meta:
         model = Lesson

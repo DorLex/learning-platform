@@ -31,7 +31,8 @@ class LessonAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response(serializer.data)
+        # return Response(serializer.data)
+        return Response(status=status.HTTP_200_OK)
 
     def delete(self, request, lesson_id):
         obj = get_object_or_404(Lesson, pk=lesson_id)
