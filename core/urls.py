@@ -31,5 +31,9 @@ urlpatterns = [
     path('api/v1/educational-content/', include('educational_content.urls')),
 ]
 
+# if settings.DEBUG:
+#     urlpatterns += [path('__debug__/', include('debug_toolbar.urls'))]
+
+
 if settings.DEBUG:
-    urlpatterns += [path('__debug__/', include('debug_toolbar.urls'))]
+    urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]
