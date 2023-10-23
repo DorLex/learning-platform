@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     # 'debug_toolbar',
 
-    'silk',
+    # 'silk',
 
     'rest_framework',
     'rest_framework_simplejwt',
@@ -60,7 +60,7 @@ MIDDLEWARE = [
 
     # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 
-    'silk.middleware.SilkyMiddleware',
+    # 'silk.middleware.SilkyMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -144,4 +144,29 @@ REST_FRAMEWORK = {
 
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'sql_log.log',
+        },
+    },
+
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
 }
