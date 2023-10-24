@@ -5,14 +5,14 @@ from course_catalog.models import CourseAccess
 from educational_content.models import Lesson
 
 
-def get_access_courses(user):
+def get_access_courses_by_user(user):
     access_courses = CourseAccess.objects.filter(user=user, is_valid=True)
 
     return access_courses
 
 
 def get_lessons_with_view_info(user):
-    access_courses = get_access_courses(user)
+    access_courses = get_access_courses_by_user(user)
 
     queryset = (
         Lesson.objects
@@ -37,7 +37,7 @@ def get_lessons_with_view_info(user):
 
 
 def get_lessons_by_course(user, course_id):
-    access_courses = get_access_courses(user)
+    access_courses = get_access_courses_by_user(user)
 
     access_course_id = get_object_or_404(
         access_courses.values_list('course_id', flat=True),

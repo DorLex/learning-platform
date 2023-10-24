@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from course_catalog.serializers import courses_statistic_serializers
-from course_catalog.services.get_db import get_courses_statistic
+from course_catalog.services.courses_statistic_service import get_courses_statistic
 
 
 class CoursesStatisticAPIView(APIView):
