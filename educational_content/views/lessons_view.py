@@ -3,12 +3,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from course_catalog.permissions import IsAdminOrAuthRead
 from educational_content.serializers import lesson_serializers, lessons_with_info_serializers
 from educational_content.services.get_db import get_lessons_with_view_info, get_lessons_by_course
 
 
 class LessonsWithInfoAPIView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAdminOrAuthRead,)
 
     def get(self, request):
         queryset = get_lessons_with_view_info(request.user)

@@ -1,15 +1,15 @@
 from rest_framework import status
 from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from educational_content.models import Lesson
+from course_catalog.permissions import IsAdminOrAuthRead
 from educational_content.serializers import lesson_serializers
 
 
 class LessonAPIView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAdminOrAuthRead,)
 
     def get(self, request, lesson_id):
         obj = get_object_or_404(Lesson, pk=lesson_id)
