@@ -30,10 +30,3 @@ urlpatterns = [
     path('api/v1/course-catalog/', include('course_catalog.urls')),
     path('api/v1/educational-content/', include('educational_content.urls')),
 ]
-
-# if settings.DEBUG:
-#     urlpatterns += [path('__debug__/', include('debug_toolbar.urls'))]
-
-
-# if settings.DEBUG:
-#     urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]
