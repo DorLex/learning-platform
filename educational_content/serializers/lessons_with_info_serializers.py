@@ -1,15 +1,6 @@
 from rest_framework import serializers
 
-from course_catalog.models import Course
 from educational_content.models import Lesson
-
-
-class LessonsSerializer(serializers.ModelSerializer):
-    # courses = serializers.SlugRelatedField(slug_field='title', many=True, queryset=Course.objects.all())
-
-    class Meta:
-        model = Lesson
-        fields = '__all__'
 
 
 class LessonsWithInfoSerializer(serializers.ModelSerializer):
