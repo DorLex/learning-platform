@@ -7,8 +7,6 @@ services:
     command: "python manage.py runserver 0.0.0.0:8000"
     ports:
       - "8000:8000"
-    depends_on:
-      - rabbitmq
 
     volumes:
       - ./logs:/proj/logs
@@ -19,7 +17,6 @@ services:
     command: "celery -A core worker -l info"
     depends_on:
       - rabbitmq
-      - app
 
 
   rabbitmq:
