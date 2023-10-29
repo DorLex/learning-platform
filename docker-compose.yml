@@ -8,18 +8,34 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - redis
+      - rabbitmq
 
-
-  redis:
-    image: redis:alpine3.18
-    ports:
-      - "6379:6379"
+    volumes:
+      - ./logs:/proj/logs
 
 
   celery:
     build: .
-    command: celery -A core worker -l info
+    command: "celery -A core worker -l info"
     depends_on:
-      - redis
+      - rabbitmq
       - app
+
+
+  rabbitmq:
+    image: rabbitmq:3.12.7-management-alpine
+
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbit_user
+      - RABBITMQ_DEFAULT_PASS=rabbit_password
+
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+
+
+#  redis:
+#    image: redis:alpine3.18
+#    ports:
+#      - "6379:6379"

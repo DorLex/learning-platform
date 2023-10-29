@@ -159,4 +159,6 @@ LOGGING = {
     },
 }
 
-CELERY_BROKER_URL = 'redis://redis:6379/0'
+# CELERY_BROKER_URL = 'redis://redis:6379/0'
+
+CELERY_BROKER_URL = 'amqp://rabbit_user:rabbit_password@rabbitmq:5672'
