@@ -13,7 +13,8 @@ class LessonAPIView(APIView):
     permission_classes = (IsAdminOrAuthRead,)
 
     def get(self, request, lesson_id):
-        my_task.delay()
+        res = my_task.delay()
+        print('-------', vars(res))
 
         obj = get_object_or_404(Lesson, pk=lesson_id)
         serializer = lesson_serializers.LessonSerializer(obj)

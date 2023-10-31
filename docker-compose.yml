@@ -7,32 +7,48 @@ services:
     command: "python manage.py runserver 0.0.0.0:8000"
     ports:
       - "8000:8000"
-
     volumes:
       - ./logs:/proj/logs
+    depends_on:
+      - pgdb
+
+
+  pgdb:
+    image: postgres:15.4-alpine3.18
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
 
 
   celery:
     build: .
     command: "celery -A core worker -l info"
     depends_on:
+      - app
       - rabbitmq
+      - redis
 
 
   rabbitmq:
     image: rabbitmq:3.12.7-management-alpine
-
     environment:
-      - RABBITMQ_DEFAULT_USER=rabbit_user
-      - RABBITMQ_DEFAULT_PASS=rabbit_password
-
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
     ports:
       - "5672:5672"
       - "15672:15672"
 
 
+  redis:
+    image: redis:alpine3.18
+    ports:
+      - "6379:6379"
 
-#  redis:
-#    image: redis:alpine3.18
-#    ports:
-#      - "6379:6379"
+
+volumes:
+  pg_data:

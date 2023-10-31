@@ -78,10 +78,24 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'TIME_ZONE': 'Europe/Moscow',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('POSTGRES_DB'),
+        'USER': config('POSTGRES_USER'),
+        'PASSWORD': config('POSTGRES_PASSWORD'),
+        'HOST': 'pgdb',
+        'PORT': 5432,
         'TIME_ZONE': 'Europe/Moscow',
     }
 }
@@ -159,6 +173,9 @@ LOGGING = {
     },
 }
 
-# CELERY_BROKER_URL = 'redis://redis:6379/0'
+RABBITMQ_USER = config('RABBITMQ_USER')
+RABBITMQ_PASSWORD = config('RABBITMQ_PASSWORD')
 
-CELERY_BROKER_URL = 'amqp://rabbit_user:rabbit_password@rabbitmq:5672'
+CELERY_BROKER_URL = f'amqp://{RABBITMQ_USER}:{RABBITMQ_PASSWORD}@rabbitmq:5672'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
+CELERY_TIMEZONE = 'Europe/Moscow'
