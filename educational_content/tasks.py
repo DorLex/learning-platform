@@ -1,10 +1,17 @@
-import time
-
 from celery import shared_task
+from django.core.mail import send_mail
+
+from django.conf import settings
 
 
 @shared_task
-def my_task():
-    time.sleep(15)
+def send_mail_about_delete(title, user_email):
+    send_mail(
+        'Удаление урока',
+        f'Урок "{title}" был удалён',
+        settings.EMAIL_HOST_USER,
+        [user_email],
+        fail_silently=False,
+    )
 
-    return '<return my_task>'
+    return f'mail delete lesson "{title}" for {user_email} success'
