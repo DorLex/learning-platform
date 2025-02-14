@@ -5,7 +5,8 @@ ENV PYTHONUNBUFFERED=1 \
     PATH=/root/.local/bin:$PATH
 
 
-RUN apt install curl && \
+RUN apt update && \
+    apt install curl -y && \
     curl -sSL https://install.python-poetry.org | python3.11 - && \
     poetry config virtualenvs.create false
 
@@ -14,7 +15,7 @@ WORKDIR /proj
 
 COPY poetry.lock pyproject.toml ./
 
-RUN poetry install
+RUN poetry install --no-root
 
 COPY . .
 
