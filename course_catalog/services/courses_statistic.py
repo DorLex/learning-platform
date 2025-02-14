@@ -1,19 +1,19 @@
 from django.contrib.auth import get_user_model
-from django.db.models import Count, Q, OuterRef, Sum, Subquery, F, IntegerField
+from django.contrib.auth.models import User as DefaultUser
+from django.db.models import Count, Q, OuterRef, Sum, Subquery, F, IntegerField, QuerySet
 
 from course_catalog.models import Course
 from educational_content.choices import ViewingStatusChoices
 
-User = get_user_model()
+User: DefaultUser = get_user_model()
 
 
-def get_total_users_count():
-    total_users_count = User.objects.count()
-    return total_users_count
+def _get_total_users_count() -> int:
+    return User.objects.count()
 
 
-def get_viewed_lessons_count_for_subquery():
-    viewed_lessons_count_for_subquery = (
+def get_viewed_lessons_count_subquery() -> QuerySet:
+    viewed_lessons_count_subquery: QuerySet = (
         Course.objects.annotate(
             viewed_lessons_count=Count(
                 'lessons__views',
@@ -24,11 +24,11 @@ def get_viewed_lessons_count_for_subquery():
         .values('viewed_lessons_count')
     )
 
-    return viewed_lessons_count_for_subquery
+    return viewed_lessons_count_subquery
 
 
-def get_total_view_time_for_subquery():
-    total_view_time_for_subquery = (
+def get_total_view_time_subquery() -> QuerySet:
+    total_view_time_subquery: QuerySet = (
         Course.objects.annotate(
             total_view_time=Sum('lessons__views__viewing_time')
         )
@@ -36,11 +36,11 @@ def get_total_view_time_for_subquery():
         .values('total_view_time')
     )
 
-    return total_view_time_for_subquery
+    return total_view_time_subquery
 
 
-def get_access_users_on_product_count_for_subquery():
-    access_users_on_product_count_for_subquery = (
+def get_access_users_on_product_count_subquery() -> QuerySet:
+    access_users_on_product_count_subquery: QuerySet = (
         Course.objects.annotate(
             access_users_on_product_count=Count(
                 'accesses',
@@ -51,31 +51,31 @@ def get_access_users_on_product_count_for_subquery():
         .values('access_users_on_product_count')
     )
 
-    return access_users_on_product_count_for_subquery
+    return access_users_on_product_count_subquery
 
 
-def get_courses_statistic():
-    total_users_count = get_total_users_count()
+def get_course_statistics() -> QuerySet:
+    total_users_count: int = _get_total_users_count()
 
-    viewed_lessons_count_for_subquery = get_viewed_lessons_count_for_subquery()
-    total_view_time_for_subquery = get_total_view_time_for_subquery()
-    access_users_on_product_count_for_subquery = get_access_users_on_product_count_for_subquery()
+    viewed_lessons_count_subquery: QuerySet = get_viewed_lessons_count_subquery()
+    total_view_time_subquery: QuerySet = get_total_view_time_subquery()
+    access_users_on_product_count_subquery: QuerySet = get_access_users_on_product_count_subquery()
 
-    queryset = (
+    course_statistics: QuerySet = (
         Course.objects.all()
         .annotate(
             viewed_lessons_count=Subquery(
-                viewed_lessons_count_for_subquery,
+                viewed_lessons_count_subquery,
                 output_field=IntegerField()
             ),
 
             total_view_time=Subquery(
-                total_view_time_for_subquery,
+                total_view_time_subquery,
                 output_field=IntegerField()
             ),
 
             access_users_on_product_count=Subquery(
-                access_users_on_product_count_for_subquery,
+                access_users_on_product_count_subquery,
                 output_field=IntegerField()
             ),
 
@@ -83,4 +83,4 @@ def get_courses_statistic():
         )
     )
 
-    return queryset
+    return course_statistics

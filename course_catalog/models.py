@@ -1,7 +1,8 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User as DefaultUser
 from django.db import models
 
-User = get_user_model()
+User: DefaultUser = get_user_model()
 
 
 class Course(models.Model):

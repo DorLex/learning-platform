@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 
-class CoursesStatisticSerializer(serializers.Serializer):
+class CourseStatisticsSerializer(serializers.Serializer):
     title = serializers.CharField()
     viewed_lessons_count = serializers.IntegerField()
     total_view_time = serializers.IntegerField()
