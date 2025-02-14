@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 
 from educational_content.models import Lesson
 from course_catalog.permissions import IsAdminOrAuthRead
-from educational_content.serializers import lesson_serializers
+from educational_content.serializers import lessons
 from educational_content.tasks import send_mail_about_delete
 
 

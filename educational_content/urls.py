@@ -1,9 +1,10 @@
 from django.urls import path
 
-from .views import lessons_view, one_lesson_view
+from educational_content.views.lesson import LessonAPIView
+from educational_content.views.lessons import LessonsWithInfoAPIView, LessonsWithInfoByCourseAPIView
 
 urlpatterns = [
-    path('lessons/', lessons_view.LessonsWithInfoAPIView.as_view()),
-    path('by-course/<int:course_id>/lessons/', lessons_view.LessonsWithInfoByCourseAPIView.as_view()),
-    path('lessons/<int:lesson_id>/', one_lesson_view.LessonAPIView.as_view()),
+    path('lessons/', LessonsWithInfoAPIView.as_view()),
+    path('by-course/<int:course_id>/lessons/', LessonsWithInfoByCourseAPIView.as_view()),
+    path('lessons/<int:lesson_id>/', LessonAPIView.as_view()),
 ]

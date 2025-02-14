@@ -1,20 +1,19 @@
-from django.db.models import FilteredRelation, F, Q
+from django.contrib.auth.models import User
+from django.db.models import FilteredRelation, F, Q, QuerySet
 from rest_framework.generics import get_object_or_404
 
 from course_catalog.models import CourseAccess
 from educational_content.models import Lesson
 
 
-def get_access_courses_by_user(user):
-    access_courses = CourseAccess.objects.filter(user=user, is_valid=True)
-
-    return access_courses
+def _get_access_courses_by_user(user: User) -> QuerySet:
+    return CourseAccess.objects.filter(user=user, is_valid=True)
 
 
-def get_lessons_with_view_info(user):
-    access_courses = get_access_courses_by_user(user)
+def get_lessons_with_view_info(user: User) -> QuerySet:
+    access_courses: QuerySet = _get_access_courses_by_user(user)
 
-    queryset = (
+    lessons_with_view_info: QuerySet = (
         Lesson.objects
         .filter(courses__id__in=access_courses.values('course_id'))
         .values('title')
@@ -33,18 +32,18 @@ def get_lessons_with_view_info(user):
         )
     )
 
-    return queryset
+    return lessons_with_view_info
 
 
-def get_lessons_by_course(user, course_id):
-    access_courses = get_access_courses_by_user(user)
+def get_lessons_by_course(user: User, course_id: int) -> QuerySet:
+    access_courses: QuerySet = _get_access_courses_by_user(user)
 
-    access_course_id = get_object_or_404(
+    access_course_id: int = get_object_or_404(
         access_courses.values_list('course_id', flat=True),
         course_id=course_id
     )
 
-    queryset = (
+    lessons_by_course: QuerySet = (
         Lesson.objects
         .filter(courses__id=access_course_id)
         .values('title')
@@ -64,4 +63,4 @@ def get_lessons_by_course(user, course_id):
 
     )
 
-    return queryset
+    return lessons_by_course
