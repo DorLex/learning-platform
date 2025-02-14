@@ -1,16 +1,13 @@
-FROM python:3.11.6-alpine3.18
+FROM python:3.11.11-slim-bookworm
 
-ENV PYTHONUNBUFFERED=1
-ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PATH=/root/.local/bin:$PATH
 
-ENV PATH=/root/.local/bin:$PATH
 
-
-RUN apk --no-cache add curl
-
-RUN curl -sSL https://install.python-poetry.org | python3.11 -
-
-RUN poetry config virtualenvs.create false
+RUN apt install curl && \
+    curl -sSL https://install.python-poetry.org | python3.11 - && \
+    poetry config virtualenvs.create false
 
 
 WORKDIR /proj
