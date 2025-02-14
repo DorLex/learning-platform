@@ -6,14 +6,14 @@
 
    *Пример для mail.ru: <https://help.mail.ru/mail/mailer/password/>*
 
-   *Полученное вписываем в `EMAIL_HOST_USER` и `EMAIL_HOST_PASSWORD`.*
+   *Вписываем в `.env`:*
+
+    - `EMAIL_HOST_USER` *- Ваша почта*
+
+    - `EMAIL_HOST_PASSWORD` *- пароль для внешнего приложения.*
 
 2. #### Запустить:
 
 ```shell
 docker compose up --build
 ```
-
-3. #### q
-
-4. #### q                                          
