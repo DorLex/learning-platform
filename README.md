@@ -13,20 +13,20 @@ API платформы для обучения на Django REST Framework.
 
 ### Запуск:
 
-#### 1. Создать файл `.env` по примеру `.env.example`:
+1. #### Создать файл `.env` по примеру `.env.example`:
 
-*Для отправки email нужно создать "Пароль для внешнего приложения".*
+   *Для отправки email нужно создать "Пароль для внешнего приложения".*
 
-*Пример для mail.ru: <https://help.mail.ru/mail/mailer/password/>*
+   *Пример для mail.ru: <https://help.mail.ru/mail/mailer/password/>*
 
-*Вписываем в `.env`:*
+   *Вписываем в `.env`:*
 
-- `EMAIL_HOST_USER` *- Ваша почта*
+    - `EMAIL_HOST_USER` *- Ваша почта*
 
-- `EMAIL_HOST_PASSWORD` *- пароль для внешнего приложения.*
+    - `EMAIL_HOST_PASSWORD` *- пароль для внешнего приложения.*
 
-#### 2. Запустить:
+2. #### Запустить:
 
-```shell
-docker compose up --build
-```
+   ```shell
+   docker compose up --build
+   ```
