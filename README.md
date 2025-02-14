@@ -2,12 +2,18 @@
 
 1. #### Создать файл `.env` по примеру `.env.example`:
 
-   Для отправки email нужно создать "Пароль для внешнего приложения". Пример для
-   mail.ru: <https://help.mail.ru/mail/mailer/password/>. Полученное вписываем в `EMAIL_HOST_USER` и
-   `EMAIL_HOST_PASSWORD`.
+   Для отправки email нужно создать "Пароль для внешнего приложения".
 
-2. ####                                      
+   Пример для mail.ru: <https://help.mail.ru/mail/mailer/password/>
 
-3. ####                                       
+   Полученное вписываем в `EMAIL_HOST_USER` и `EMAIL_HOST_PASSWORD`.
 
-4. ####                                      
+2. #### Запустить:
+
+```shell
+docker compose up --build
+```
+
+3. #### q
+
+4. #### q                                          
