@@ -25,7 +25,7 @@ API платформы для обучения на Django REST Framework.
 
     - `EMAIL_HOST_PASSWORD` *- пароль для внешнего приложения.*
 
-2. #### Запустить:
+2. ##### Запустить:
 
    ```shell
    docker compose up --build
