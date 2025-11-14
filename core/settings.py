@@ -12,19 +12,19 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
-from decouple import config
+from core.envs import env_config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR: Path = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('DJANGO_SECRET_KEY')
+SECRET_KEY: str = env_config.django_secret_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
+DEBUG: bool = env_config.django_debug
 
 ALLOWED_HOSTS = []
 
@@ -88,16 +88,16 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # }
 
 
-DATABASES = {
+DATABASES: dict = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('POSTGRES_DB'),
-        'USER': config('POSTGRES_USER'),
-        'PASSWORD': config('POSTGRES_PASSWORD'),
-        'HOST': config('POSTGRES_HOST'),
-        'PORT': config('POSTGRES_PORT'),
+        'NAME': env_config.postgres_db,
+        'USER': env_config.postgres_user,
+        'PASSWORD': env_config.postgres_password,
+        'HOST': env_config.postgres_host,
+        'PORT': env_config.postgres_port,
         'TIME_ZONE': 'Europe/Moscow',
-    }
+    },
 }
 
 # Password validation
@@ -145,10 +145,10 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
 
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
 }
 
-LOGGING = {
+LOGGING: dict = {
     'version': 1,
     'disable_existing_loggers': False,
 
@@ -173,16 +173,13 @@ LOGGING = {
     },
 }
 
-RABBITMQ_USER = config('RABBITMQ_DEFAULT_USER')
-RABBITMQ_PASSWORD = config('RABBITMQ_DEFAULT_PASS')
+CELERY_BROKER_URL: str = env_config.celery_broker_url
+CELERY_RESULT_BACKEND: str = env_config.celery_result_backend
+CELERY_TIMEZONE: str = 'Europe/Moscow'
 
-CELERY_BROKER_URL = f'amqp://{RABBITMQ_USER}:{RABBITMQ_PASSWORD}@rabbitmq:5672'
-CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
-CELERY_TIMEZONE = 'Europe/Moscow'
-
-EMAIL_HOST = 'smtp.mail.ru'
-EMAIL_PORT = 2525
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+EMAIL_HOST: str = 'smtp.mail.ru'
+EMAIL_PORT: int = 2525
+EMAIL_HOST_USER: str = env_config.email_host_user
+EMAIL_HOST_PASSWORD: str = env_config.email_host_password
+EMAIL_USE_TLS: bool = True
+EMAIL_USE_SSL: bool = False
