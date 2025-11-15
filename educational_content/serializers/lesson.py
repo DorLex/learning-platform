@@ -6,4 +6,4 @@ from educational_content.models import Lesson
 class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
-        fields = '__all__'
+        fields: str | tuple = '__all__'

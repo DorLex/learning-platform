@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework import status
 from rest_framework.generics import get_object_or_404
 from rest_framework.request import Request
@@ -6,22 +7,23 @@ from rest_framework.views import APIView
 
 from course_catalog.permissions import IsAdminOrAuthRead
 from educational_content.models import Lesson
-from educational_content.serializers.lessons import LessonSerializer
+from educational_content.serializers.lesson import LessonSerializer
 from educational_content.tasks import send_mail_about_delete
 
 
+@extend_schema(tags=['Lessons'])
 class LessonAPIView(APIView):
     permission_classes = (IsAdminOrAuthRead,)
 
-    def get(self, request: Request, lesson_id: int) -> Response:
+    def get(self, _request: Request, lesson_id: int) -> Response:
         lesson: Lesson = get_object_or_404(Lesson, pk=lesson_id)
-        serializer = LessonSerializer(lesson)
+        serializer: LessonSerializer = LessonSerializer(lesson)
 
         return Response(serializer.data)
 
     def put(self, request: Request, lesson_id: int) -> Response:
         lesson: Lesson = get_object_or_404(Lesson, pk=lesson_id)
-        serializer = LessonSerializer(lesson, request.data)
+        serializer: LessonSerializer = LessonSerializer(lesson, request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
@@ -29,7 +31,7 @@ class LessonAPIView(APIView):
 
     def patch(self, request: Request, lesson_id: int) -> Response:
         lesson: Lesson = get_object_or_404(Lesson, pk=lesson_id)
-        serializer = LessonSerializer(lesson, request.data, partial=True)
+        serializer: LessonSerializer = LessonSerializer(lesson, request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
@@ -41,6 +43,6 @@ class LessonAPIView(APIView):
 
         send_mail_about_delete.delay(lesson.title, request.user.email)
 
-        serializer = LessonSerializer(lesson)
+        serializer: LessonSerializer = LessonSerializer(lesson)
 
         return Response(serializer.data, status.HTTP_204_NO_CONTENT)

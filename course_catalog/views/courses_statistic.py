@@ -1,18 +1,20 @@
 from django.db.models import QuerySet
+from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from course_catalog.serializers.courses_statistic import CourseStatisticsSerializer
+from course_catalog.serializers.statistic import CourseStatisticsSerializer
 from course_catalog.services.courses_statistic import get_course_statistics
 
 
+@extend_schema(tags=['Courses'])
 class CoursesStatisticAPIView(APIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
-    def get(self, request: Request) -> Response:
+    def get(self, _request: Request) -> Response:
         course_statistics: QuerySet = get_course_statistics()
-        serializer = CourseStatisticsSerializer(course_statistics, many=True)
+        serializer: CourseStatisticsSerializer = CourseStatisticsSerializer(course_statistics, many=True)
 
         return Response(serializer.data)
