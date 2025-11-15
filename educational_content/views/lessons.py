@@ -19,6 +19,7 @@ from educational_content.services.crud import get_lessons_by_course, get_lessons
 class LessonsWithInfoAPIView(APIView):
     permission_classes = (IsAdminOrAuthRead,)
 
+    @extend_schema(responses=LessonWithInfoSerializer(many=True))
     def get(self, request: Request) -> Response:
         lessons: QuerySet = get_lessons_with_view_info(request.user)
         serializer: LessonWithInfoSerializer = LessonWithInfoSerializer(lessons, many=True)

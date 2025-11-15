@@ -5,8 +5,8 @@ from educational_content.models import Lesson
 
 class LessonWithInfoSerializer(serializers.ModelSerializer):
     course = serializers.CharField()
-    viewing_status = serializers.CharField()
-    viewing_time = serializers.IntegerField()
+    viewing_status = serializers.CharField(allow_null=True)
+    viewing_time = serializers.IntegerField(allow_null=False)
 
     class Meta:
         model = Lesson
