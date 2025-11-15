@@ -40,8 +40,8 @@ services:
       - "8000:8000"
     depends_on:
       - postgres
-    #    volumes:
-    #      - ./:/proj
+    volumes:
+      - ./:/proj
 
   postgres:
     image: postgres:17.6-alpine3.22

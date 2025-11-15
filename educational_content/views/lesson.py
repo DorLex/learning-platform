@@ -13,13 +13,13 @@ from educational_content.tasks import send_mail_about_delete
 class LessonAPIView(APIView):
     permission_classes = (IsAdminOrAuthRead,)
 
-    def get(self, request: Request, lesson_id: int):
+    def get(self, request: Request, lesson_id: int) -> Response:
         lesson: Lesson = get_object_or_404(Lesson, pk=lesson_id)
         serializer = LessonSerializer(lesson)
 
         return Response(serializer.data)
 
-    def put(self, request: Request, lesson_id: int):
+    def put(self, request: Request, lesson_id: int) -> Response:
         lesson: Lesson = get_object_or_404(Lesson, pk=lesson_id)
         serializer = LessonSerializer(lesson, request.data)
         serializer.is_valid(raise_exception=True)
@@ -27,7 +27,7 @@ class LessonAPIView(APIView):
 
         return Response(serializer.data)
 
-    def patch(self, request: Request, lesson_id: int):
+    def patch(self, request: Request, lesson_id: int) -> Response:
         lesson: Lesson = get_object_or_404(Lesson, pk=lesson_id)
         serializer = LessonSerializer(lesson, request.data, partial=True)
         serializer.is_valid(raise_exception=True)
@@ -35,7 +35,7 @@ class LessonAPIView(APIView):
 
         return Response(serializer.data)
 
-    def delete(self, request: Request, lesson_id: int):
+    def delete(self, request: Request, lesson_id: int) -> Response:
         lesson: Lesson = get_object_or_404(Lesson, pk=lesson_id)
         lesson.delete()
 

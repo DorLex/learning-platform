@@ -15,8 +15,8 @@ class Lesson(models.Model):
 
     courses = models.ManyToManyField(Course, 'lessons', blank=True)
 
-    def __str__(self):
-        return self.title
+    def __str__(self) -> str:
+        return f'[{self.id}] {self.title}'
 
 
 class LessonViewInfo(models.Model):
@@ -25,11 +25,14 @@ class LessonViewInfo(models.Model):
 
     viewing_time = models.PositiveSmallIntegerField(default=0)
     last_viewing_time = models.DateTimeField(auto_now=True)
-    viewing_status = models.CharField(max_length=10, choices=ViewingStatusChoices.choices,
-                                      default=ViewingStatusChoices.NOT_VIEWED)
+    viewing_status = models.CharField(
+        max_length=10,
+        choices=ViewingStatusChoices.choices,
+        default=ViewingStatusChoices.NOT_VIEWED,
+    )
 
     class Meta:
         unique_together = ('user', 'lesson')
 
-    def __str__(self):
-        return f'{self.user}-view-{self.lesson}'
+    def __str__(self) -> str:
+        return f'{self.user} <-view-> {self.lesson}'

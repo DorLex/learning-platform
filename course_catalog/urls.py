@@ -1,4 +1,4 @@
-from django.urls import path, URLPattern
+from django.urls import URLPattern, path
 
 from course_catalog.views.courses_access import CoursesAccessAPIView
 from course_catalog.views.courses_statistic import CoursesStatisticAPIView

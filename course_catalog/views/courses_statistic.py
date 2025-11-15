@@ -11,7 +11,7 @@ from course_catalog.services.courses_statistic import get_course_statistics
 class CoursesStatisticAPIView(APIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
-    def get(self, request: Request):
+    def get(self, request: Request) -> Response:
         course_statistics: QuerySet = get_course_statistics()
         serializer = CourseStatisticsSerializer(course_statistics, many=True)
 

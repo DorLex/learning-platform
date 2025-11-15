@@ -1,4 +1,4 @@
-from django.urls import path, URLPattern
+from django.urls import URLPattern, path
 
 from educational_content.views.lesson import LessonAPIView
 from educational_content.views.lessons import LessonsWithInfoAPIView, LessonsWithInfoByCourseAPIView

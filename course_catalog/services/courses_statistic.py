@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User as DefaultUser
-from django.db.models import Count, Q, OuterRef, Sum, Subquery, F, IntegerField, QuerySet
+from django.db.models import Count, F, IntegerField, OuterRef, Q, QuerySet, Subquery, Sum
 
 from course_catalog.models import Course
 from educational_content.choices import ViewingStatusChoices
@@ -17,8 +17,8 @@ def get_viewed_lessons_count_subquery() -> QuerySet:
         Course.objects.annotate(
             viewed_lessons_count=Count(
                 'lessons__views',
-                filter=Q(lessons__views__viewing_status=ViewingStatusChoices.VIEWED)
-            )
+                filter=Q(lessons__views__viewing_status=ViewingStatusChoices.VIEWED),
+            ),
         )
         .filter(pk=OuterRef('id'))
         .values('viewed_lessons_count')
@@ -30,7 +30,7 @@ def get_viewed_lessons_count_subquery() -> QuerySet:
 def get_total_view_time_subquery() -> QuerySet:
     total_view_time_subquery: QuerySet = (
         Course.objects.annotate(
-            total_view_time=Sum('lessons__views__viewing_time')
+            total_view_time=Sum('lessons__views__viewing_time'),
         )
         .filter(pk=OuterRef('id'))
         .values('total_view_time')
@@ -45,7 +45,7 @@ def get_access_users_on_product_count_subquery() -> QuerySet:
             access_users_on_product_count=Count(
                 'accesses',
                 filter=Q(accesses__is_valid=True),
-            )
+            ),
         )
         .filter(pk=OuterRef('id'))
         .values('access_users_on_product_count')
@@ -61,26 +61,20 @@ def get_course_statistics() -> QuerySet:
     total_view_time_subquery: QuerySet = get_total_view_time_subquery()
     access_users_on_product_count_subquery: QuerySet = get_access_users_on_product_count_subquery()
 
-    course_statistics: QuerySet = (
-        Course.objects.all()
-        .annotate(
-            viewed_lessons_count=Subquery(
-                viewed_lessons_count_subquery,
-                output_field=IntegerField()
-            ),
-
-            total_view_time=Subquery(
-                total_view_time_subquery,
-                output_field=IntegerField()
-            ),
-
-            access_users_on_product_count=Subquery(
-                access_users_on_product_count_subquery,
-                output_field=IntegerField()
-            ),
-
-            percent_users_buy=F('access_users_on_product_count') / float(total_users_count) * 100
-        )
+    course_statistics: QuerySet = Course.objects.all().annotate(
+        viewed_lessons_count=Subquery(
+            viewed_lessons_count_subquery,
+            output_field=IntegerField(),
+        ),
+        total_view_time=Subquery(
+            total_view_time_subquery,
+            output_field=IntegerField(),
+        ),
+        access_users_on_product_count=Subquery(
+            access_users_on_product_count_subquery,
+            output_field=IntegerField(),
+        ),
+        percent_users_buy=F('access_users_on_product_count') / float(total_users_count) * 100,
     )
 
     return course_statistics

@@ -8,8 +8,8 @@ User: DefaultUser = get_user_model()
 class Course(models.Model):
     title = models.CharField(max_length=255, db_index=True)
 
-    def __str__(self):
-        return self.title
+    def __str__(self) -> str:
+        return f'[{self.id}] {self.title}'
 
 
 class CourseAccess(models.Model):
@@ -20,5 +20,5 @@ class CourseAccess(models.Model):
     class Meta:
         unique_together = ('user', 'course')
 
-    def __str__(self):
-        return f'{self.user}-access-{self.course}'
+    def __str__(self) -> str:
+        return f'{self.user} <-access-> {self.course}'

@@ -8,22 +8,22 @@ from rest_framework.views import APIView
 from course_catalog.permissions import IsAdminOrAuthRead
 from educational_content.serializers.lessons import LessonSerializer
 from educational_content.serializers.lessons_with_info import (
+    LessonsWithInfoByCourseSerializer,
     LessonsWithInfoSerializer,
-    LessonsWithInfoByCourseSerializer
 )
-from educational_content.services.crud import get_lessons_with_view_info, get_lessons_by_course
+from educational_content.services.crud import get_lessons_by_course, get_lessons_with_view_info
 
 
 class LessonsWithInfoAPIView(APIView):
     permission_classes = (IsAdminOrAuthRead,)
 
-    def get(self, request: Request):
+    def get(self, request: Request) -> Response:
         lessons: QuerySet = get_lessons_with_view_info(request.user)
         serializer = LessonsWithInfoSerializer(lessons, many=True)
 
         return Response(serializer.data)
 
-    def post(self, request: Request):
+    def post(self, request: Request) -> Response:
         serializer = LessonSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -34,7 +34,7 @@ class LessonsWithInfoAPIView(APIView):
 class LessonsWithInfoByCourseAPIView(APIView):
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request: Request, course_id: int):
+    def get(self, request: Request, course_id: int) -> Response:
         lessons: QuerySet = get_lessons_by_course(request.user, course_id)
         serializer = LessonsWithInfoByCourseSerializer(lessons, many=True)
 

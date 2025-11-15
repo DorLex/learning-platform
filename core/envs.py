@@ -38,12 +38,7 @@ class EnvConfig(BaseSettings):
 
     @property
     def celery_result_backend(self) -> str:
-        return (
-            f'redis://'
-            f'{self.redis_host}:'
-            f'{self.redis_port}/'
-            f'{self.redis_db}'
-        )
+        return f'redis://{self.redis_host}:{self.redis_port}/{self.redis_db}'
 
     model_config = SettingsConfigDict(
         env_file='.env',

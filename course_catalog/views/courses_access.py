@@ -12,13 +12,13 @@ from course_catalog.services.courses_access import get_courses_accesses
 class CoursesAccessAPIView(APIView):
     permission_classes = (IsAdminOrAuthRead,)
 
-    def get(self, request: Request):
+    def get(self, request: Request) -> Response:
         access_to_courses: QuerySet = get_courses_accesses()
         serializer = CourseAccessSerializer(access_to_courses, many=True)
 
         return Response(serializer.data)
 
-    def post(self, request: Request):
+    def post(self, request: Request) -> Response:
         serializer = CourseAccessSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()

@@ -37,10 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'rest_framework',
     'rest_framework_simplejwt',
-
     'course_catalog',
     'educational_content',
 ]
@@ -143,7 +141,6 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
@@ -151,7 +148,6 @@ REST_FRAMEWORK = {
 LOGGING: dict = {
     'version': 1,
     'disable_existing_loggers': False,
-
     'handlers': {
         'console': {
             'level': 'DEBUG',
@@ -163,7 +159,6 @@ LOGGING: dict = {
             'filename': BASE_DIR / 'logs/sql_log.log',
         },
     },
-
     'loggers': {
         'django.db.backends': {
             'handlers': ['file'],

@@ -13,6 +13,6 @@ WORKDIR /proj
 
 COPY ./poetry.lock ./pyproject.toml ./
 
-RUN poetry install --no-root
+RUN poetry install --no-root --without dev
 
 COPY ./ ./
