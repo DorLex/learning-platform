@@ -8,6 +8,10 @@ User: type[AbstractBaseUser] = get_user_model()
 class Course(models.Model):
     title = models.CharField(max_length=255, db_index=True)
 
+    class Meta:
+        verbose_name: str = 'Курс'
+        verbose_name_plural: str = 'Курсы'
+
     def __str__(self) -> str:
         return f'[{self.id}] {self.title}'
 
@@ -18,7 +22,9 @@ class CourseAccess(models.Model):
     is_valid = models.BooleanField(default=True)
 
     class Meta:
-        unique_together = ('user', 'course')
+        unique_together: tuple = ('user', 'course')
+        verbose_name: str = 'Доступ к курсу'
+        verbose_name_plural: str = 'Доступ к курсам'
 
     def __str__(self) -> str:
         return f'{self.user} <-access-> {self.course}'

@@ -15,6 +15,10 @@ class Lesson(models.Model):
 
     courses = models.ManyToManyField(Course, 'lessons', blank=True)
 
+    class Meta:
+        verbose_name: str = 'Урок'
+        verbose_name_plural: str = 'Уроки'
+
     def __str__(self) -> str:
         return f'[{self.id}] {self.title}'
 
@@ -32,7 +36,9 @@ class LessonViewInfo(models.Model):
     )
 
     class Meta:
-        unique_together = ('user', 'lesson')
+        unique_together: tuple = ('user', 'lesson')
+        verbose_name: str = 'Инфо просмотров урока'
+        verbose_name_plural: str = 'Инфо просмотров уроков'
 
     def __str__(self) -> str:
         return f'{self.user} <-view-> {self.lesson}'
