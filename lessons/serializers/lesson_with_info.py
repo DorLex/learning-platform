@@ -10,7 +10,6 @@ class LessonWithInfoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model: type[Lesson] = Lesson
-
         fields: tuple = (
             'course_title',
             'title',

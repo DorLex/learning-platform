@@ -28,6 +28,8 @@ class LessonsAPIView(APIView):
         responses={status.HTTP_201_CREATED: LessonSerializer},
     )
     def post(self, request: Request) -> Response[ReturnDict]:
+        """Создать урок"""
+
         lesson_service: LessonService = LessonService()
         lesson: ReturnDict = lesson_service.create_lesson(request.data)
         return Response(lesson, status.HTTP_201_CREATED)

@@ -4,6 +4,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.utils.serializer_helpers import ReturnDict, ReturnList
 
 from courses.models import CourseAccess
+from courses.services.course import CourseService
 from lessons.models import Lesson
 from lessons.serializers.lesson import LessonSerializer
 from lessons.serializers.lesson_with_info import LessonWithInfoSerializer
@@ -41,7 +42,8 @@ class LessonService:
         return serializer.data
 
     def get_lessons_with_view_info_by_user(self, user: User) -> ReturnList:
-        course_accesses: QuerySet[CourseAccess] = self._get_course_accesses_by_user(user)
+        course_service: CourseService = CourseService()
+        course_accesses: QuerySet[CourseAccess] = course_service.get_course_accesses_by_user(user)
 
         lessons_with_view_info: QuerySet[Lesson, dict] = (
             Lesson.objects.filter(
@@ -63,6 +65,3 @@ class LessonService:
 
         serializer: LessonWithInfoSerializer = LessonWithInfoSerializer(lessons_with_view_info, many=True)
         return serializer.data
-
-    def _get_course_accesses_by_user(self, user: User) -> QuerySet[CourseAccess]:
-        return CourseAccess.objects.filter(user=user, is_valid=True)

@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from courses.serializers.statistic import CourseStatisticSerializer
-from courses.services.statistic import get_course_statistics
+from courses.services._statistic import get_course_statistics
 
 
 @extend_schema(tags=['Courses'])
