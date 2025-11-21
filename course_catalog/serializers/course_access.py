@@ -5,5 +5,5 @@ from course_catalog.models import CourseAccess
 
 class CourseAccessSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CourseAccess
+        model: type[CourseAccess] = CourseAccess
         fields: str | tuple = '__all__'
