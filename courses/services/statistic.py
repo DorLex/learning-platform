@@ -1,11 +1,11 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User as DefaultUser
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.db.models import Count, F, IntegerField, OuterRef, Q, QuerySet, Subquery, Sum
 
 from courses.models import Course
 from lessons.choices import ViewingStatusChoices
 
-User: DefaultUser = get_user_model()
+User: type[AbstractBaseUser] = get_user_model()
 
 
 def _get_total_users_count() -> int:

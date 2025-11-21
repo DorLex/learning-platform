@@ -3,17 +3,17 @@ from rest_framework import serializers
 from lessons.models import Lesson
 
 
-class LessonWithInfoSerializer(serializers.ModelSerializer):
-    course = serializers.CharField()
-    viewing_status = serializers.CharField(allow_null=True)
-    viewing_time = serializers.IntegerField(allow_null=False)
+class LessonWithInfoByCourseSerializer(serializers.ModelSerializer):
+    viewing_status = serializers.CharField()
+    viewing_time = serializers.IntegerField()
+    last_viewing_time = serializers.DateTimeField()
 
     class Meta:
         model: type[Lesson] = Lesson
 
         fields: tuple = (
-            'course',
             'title',
             'viewing_status',
             'viewing_time',
+            'last_viewing_time',
         )

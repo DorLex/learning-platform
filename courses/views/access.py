@@ -6,7 +6,7 @@ from rest_framework.utils.serializer_helpers import ReturnDict, ReturnList
 from rest_framework.views import APIView
 
 from courses.permissions import IsAdminOrAuthRead
-from courses.serializers.course_access import CourseAccessSerializer
+from courses.serializers.access import CourseAccessSerializer
 from courses.services.course import CourseService
 
 

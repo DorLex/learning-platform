@@ -1,9 +1,12 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.db.models import F, FilteredRelation, Q, QuerySet
 from rest_framework.generics import get_object_or_404
 
 from courses.models import CourseAccess
 from lessons.models import Lesson
+
+User: type[AbstractBaseUser] = get_user_model()
 
 
 def _get_access_courses_by_user(user: User) -> QuerySet:

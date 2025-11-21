@@ -2,7 +2,7 @@ from django.db.models import QuerySet
 from rest_framework.utils.serializer_helpers import ReturnList
 
 from courses.models import CourseAccess
-from courses.serializers.course_access import CourseAccessSerializer
+from courses.serializers.access import CourseAccessSerializer
 
 
 class CourseService:
