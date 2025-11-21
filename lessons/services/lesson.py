@@ -8,6 +8,13 @@ from lessons.tasks import send_mail_about_delete
 
 
 class LessonService:
+    def create_lesson(self, lesson_data: dict) -> ReturnDict:
+        serializer: LessonSerializer = LessonSerializer(data=lesson_data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return serializer.data
+
     def get_lesson(self, lesson_id: int) -> ReturnDict:
         lesson: Lesson = get_object_or_404(Lesson, pk=lesson_id)
         serializer: LessonSerializer = LessonSerializer(lesson)
