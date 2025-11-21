@@ -1,7 +1,7 @@
 from django.urls import URLPattern, path
 
-from educational_content.views.lesson import LessonAPIView
-from educational_content.views.lessons import LessonsWithInfoAPIView, LessonsWithInfoByCourseAPIView
+from lessons.views.lesson import LessonAPIView
+from lessons.views.lessons import LessonsWithInfoAPIView, LessonsWithInfoByCourseAPIView
 
 urlpatterns: list[URLPattern] = [
     path('lessons/', LessonsWithInfoAPIView.as_view()),

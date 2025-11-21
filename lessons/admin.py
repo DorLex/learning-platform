@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from educational_content.models import Lesson, LessonViewInfo
+from lessons.models import Lesson, LessonViewInfo
 
 
 @admin.register(Lesson)

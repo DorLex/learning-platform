@@ -5,10 +5,10 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from course_catalog.permissions import IsAdminOrAuthRead
-from educational_content.models import Lesson
-from educational_content.serializers.lesson import LessonSerializer
-from educational_content.tasks import send_mail_about_delete
+from courses.permissions import IsAdminOrAuthRead
+from lessons.models import Lesson
+from lessons.serializers.lesson import LessonSerializer
+from lessons.tasks import send_mail_about_delete
 
 
 @extend_schema(tags=['Lessons'])

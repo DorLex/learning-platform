@@ -2,8 +2,8 @@ from django.contrib.auth.models import User
 from django.db.models import F, FilteredRelation, Q, QuerySet
 from rest_framework.generics import get_object_or_404
 
-from course_catalog.models import CourseAccess
-from educational_content.models import Lesson
+from courses.models import CourseAccess
+from lessons.models import Lesson
 
 
 def _get_access_courses_by_user(user: User) -> QuerySet:

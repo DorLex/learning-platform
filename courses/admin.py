@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from course_catalog.models import Course, CourseAccess
+from courses.models import Course, CourseAccess
 
 
 @admin.register(Course)

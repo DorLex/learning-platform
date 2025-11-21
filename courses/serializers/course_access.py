@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from course_catalog.models import CourseAccess
+from courses.models import CourseAccess
 
 
 class CourseAccessSerializer(serializers.ModelSerializer):

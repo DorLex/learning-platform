@@ -2,8 +2,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User as DefaultUser
 from django.db.models import Count, F, IntegerField, OuterRef, Q, QuerySet, Subquery, Sum
 
-from course_catalog.models import Course
-from educational_content.choices import ViewingStatusChoices
+from courses.models import Course
+from lessons.choices import ViewingStatusChoices
 
 User: DefaultUser = get_user_model()
 

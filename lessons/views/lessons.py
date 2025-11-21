@@ -6,13 +6,13 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from course_catalog.permissions import IsAdminOrAuthRead
-from educational_content.serializers.lesson import LessonSerializer
-from educational_content.serializers.lesson_with_info import (
+from courses.permissions import IsAdminOrAuthRead
+from lessons.serializers.lesson import LessonSerializer
+from lessons.serializers.lesson_with_info import (
     LessonsWithInfoByCourseSerializer,
     LessonWithInfoSerializer,
 )
-from educational_content.services.crud import get_lessons_by_course, get_lessons_with_view_info
+from lessons.services.crud import get_lessons_by_course, get_lessons_with_view_info
 
 
 @extend_schema(tags=['Lessons'])

@@ -43,8 +43,8 @@ INSTALLED_APPS: list[str] = [
     'rest_framework_simplejwt',
     'drf_spectacular',
     # модули:
-    'course_catalog',
-    'educational_content',
+    'courses',
+    'lessons',
 ]
 
 MIDDLEWARE = [
