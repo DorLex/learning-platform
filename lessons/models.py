@@ -28,7 +28,7 @@ class LessonViewInfo(models.Model):
     viewing_status = models.CharField(
         max_length=10,
         choices=ViewingStatusChoices.choices,
-        default=ViewingStatusChoices.NOT_VIEWED,
+        default=ViewingStatusChoices.not_viewed,
     )
 
     class Meta:

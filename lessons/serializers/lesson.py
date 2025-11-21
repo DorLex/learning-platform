@@ -5,5 +5,5 @@ from lessons.models import Lesson
 
 class LessonSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Lesson
+        model: type[Lesson] = Lesson
         fields: str | tuple = '__all__'

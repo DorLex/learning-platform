@@ -17,7 +17,7 @@ def get_viewed_lessons_count_subquery() -> QuerySet:
         Course.objects.annotate(
             viewed_lessons_count=Count(
                 'lessons__views',
-                filter=Q(lessons__views__viewing_status=ViewingStatusChoices.VIEWED),
+                filter=Q(lessons__views__viewing_status=ViewingStatusChoices.viewed),
             ),
         )
         .filter(pk=OuterRef('id'))

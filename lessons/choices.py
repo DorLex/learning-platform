@@ -2,5 +2,5 @@ from django.db import models
 
 
 class ViewingStatusChoices(models.TextChoices):
-    VIEWED = 'VIEWED'
-    NOT_VIEWED = 'NOT_VIEWED'
+    viewed = 'viewed', 'Просмотрено'
+    not_viewed = 'not_viewed', 'Не просмотрено'
