@@ -1,9 +1,12 @@
 from django.contrib.auth.models import User
+from django.db.models import F, FilteredRelation, Q, QuerySet
 from rest_framework.generics import get_object_or_404
-from rest_framework.utils.serializer_helpers import ReturnDict
+from rest_framework.utils.serializer_helpers import ReturnDict, ReturnList
 
+from courses.models import CourseAccess
 from lessons.models import Lesson
 from lessons.serializers.lesson import LessonSerializer
+from lessons.serializers.lesson_with_info import LessonWithInfoSerializer
 from lessons.tasks import send_mail_about_delete
 
 
@@ -36,3 +39,30 @@ class LessonService:
 
         serializer: LessonSerializer = LessonSerializer(lesson)
         return serializer.data
+
+    def get_lessons_with_view_info_by_user(self, user: User) -> ReturnList:
+        course_accesses: QuerySet[CourseAccess] = self._get_course_accesses_by_user(user)
+
+        lessons_with_view_info: QuerySet[Lesson, dict] = (
+            Lesson.objects.filter(
+                courses__id__in=course_accesses.values('course_id'),
+            )
+            .values('title')
+            .alias(
+                view_info=FilteredRelation(
+                    'views',
+                    condition=Q(views__user=user),
+                ),
+            )
+            .annotate(
+                course_title=F('courses__title'),
+                viewing_status=F('view_info__viewing_status'),
+                viewing_time=F('view_info__viewing_time'),
+            )
+        )
+
+        serializer: LessonWithInfoSerializer = LessonWithInfoSerializer(lessons_with_view_info, many=True)
+        return serializer.data
+
+    def _get_course_accesses_by_user(self, user: User) -> QuerySet[CourseAccess]:
+        return CourseAccess.objects.filter(user=user, is_valid=True)

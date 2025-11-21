@@ -13,26 +13,26 @@ def _get_access_courses_by_user(user: User) -> QuerySet:
     return CourseAccess.objects.filter(user=user, is_valid=True)
 
 
-def get_lessons_with_view_info(user: User) -> QuerySet:
-    access_courses: QuerySet = _get_access_courses_by_user(user)
-
-    lessons_with_view_info: QuerySet = (
-        Lesson.objects.filter(courses__id__in=access_courses.values('course_id'))
-        .values('title')
-        .alias(
-            view_info=FilteredRelation(
-                'views',
-                condition=Q(views__user=user),
-            ),
-        )
-        .annotate(
-            course=F('courses__title'),
-            viewing_status=F('view_info__viewing_status'),
-            viewing_time=F('view_info__viewing_time'),
-        )
-    )
-
-    return lessons_with_view_info
+# def get_lessons_with_view_info(user: User) -> QuerySet:
+#     access_courses: QuerySet = _get_access_courses_by_user(user)
+#
+#     lessons_with_view_info: QuerySet = (
+#         Lesson.objects.filter(courses__id__in=access_courses.values('course_id'))
+#         .values('title')
+#         .alias(
+#             view_info=FilteredRelation(
+#                 'views',
+#                 condition=Q(views__user=user),
+#             ),
+#         )
+#         .annotate(
+#             course=F('courses__title'),
+#             viewing_status=F('view_info__viewing_status'),
+#             viewing_time=F('view_info__viewing_time'),
+#         )
+#     )
+#
+#     return lessons_with_view_info
 
 
 def get_lessons_by_course(user: User, course_id: int) -> QuerySet:
