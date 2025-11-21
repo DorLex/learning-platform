@@ -11,7 +11,7 @@ from courses.services.statistic import get_course_statistics
 
 @extend_schema(tags=['Courses'])
 class CoursesStatisticAPIView(APIView):
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes: tuple = (IsAuthenticatedOrReadOnly,)
 
     @extend_schema(responses=CourseStatisticSerializer(many=True))
     def get(self, _request: Request) -> Response:

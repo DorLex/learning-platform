@@ -1,8 +1,10 @@
+from django.contrib.auth.models import User
 from rest_framework.generics import get_object_or_404
 from rest_framework.utils.serializer_helpers import ReturnDict
 
 from lessons.models import Lesson
 from lessons.serializers.lesson import LessonSerializer
+from lessons.tasks import send_mail_about_delete
 
 
 class LessonService:
@@ -17,4 +19,13 @@ class LessonService:
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
+        return serializer.data
+
+    def delete_lesson(self, lesson_id: int, user: User) -> ReturnDict:
+        lesson: Lesson = get_object_or_404(Lesson, pk=lesson_id)
+        lesson.delete()
+
+        send_mail_about_delete.delay(lesson.title, user.email)
+
+        serializer: LessonSerializer = LessonSerializer(lesson)
         return serializer.data

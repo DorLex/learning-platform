@@ -13,7 +13,7 @@ from lessons.services.crud import get_lessons_with_view_info
 
 @extend_schema(tags=['Lessons'])
 class LessonsWithInfoAPIView(APIView):
-    permission_classes = (IsAdminOrAuthRead,)
+    permission_classes: tuple = (IsAdminOrAuthRead,)
 
     @extend_schema(responses=LessonWithInfoSerializer(many=True))
     def get(self, request: Request) -> Response:

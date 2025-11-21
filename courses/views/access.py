@@ -12,7 +12,7 @@ from courses.services.course import CourseService
 
 @extend_schema(tags=['Courses'])
 class CourseAccessAPIView(APIView):
-    permission_classes = (IsAdminOrAuthRead,)
+    permission_classes: tuple = (IsAdminOrAuthRead,)
 
     @extend_schema(responses=CourseAccessSerializer(many=True))
     def get(self, _request: Request) -> Response[ReturnList]:

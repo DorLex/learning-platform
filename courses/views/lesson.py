@@ -12,7 +12,7 @@ from lessons.services.crud import get_lessons_by_course
 
 @extend_schema(tags=['Courses'])
 class LessonsByCourseAPIView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes: tuple = (IsAuthenticated,)
 
     @extend_schema(responses=LessonWithInfoByCourseSerializer(many=True))
     def get(self, request: Request, course_id: int) -> Response[ReturnList]:
