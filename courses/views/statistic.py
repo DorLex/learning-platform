@@ -15,7 +15,7 @@ class CoursesStatisticAPIView(APIView):
 
     @extend_schema(responses=CourseStatisticSerializer(many=True))
     def get(self, _request: Request) -> Response[ReturnList]:
-        """Статистика курсов"""
+        """Комплексная статистика курсов"""
 
         statistic_service: StatisticService = StatisticService()
         course_statistic: ReturnList = statistic_service.get_course_statistic()

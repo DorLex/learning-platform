@@ -1,17 +1,17 @@
-## Описание:
+### Описание:
 
-API платформы для обучения на Django REST Framework.
+API платформы для обучения.
 
-## Стек:
+### Стек:
 
-- DRF
+- Django REST Framework
 - PostgreSQL
 - Celery
-- Rabbitmq
+- RabbitMQ
 - Redis
 - Docker
 
-## Запуск:
+### Запуск:
 
 1. **Создать файл `.env` по примеру `.env.example`:**
 
