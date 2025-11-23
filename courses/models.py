@@ -13,7 +13,7 @@ class Course(models.Model):
         verbose_name_plural: str = 'Курсы'
 
     def __str__(self) -> str:
-        return f'[{self.id}] {self.title}'
+        return f'[{self.pk}] {self.title}'
 
 
 class CourseAccess(models.Model):

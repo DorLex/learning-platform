@@ -20,7 +20,7 @@ class Lesson(models.Model):
         verbose_name_plural: str = 'Уроки'
 
     def __str__(self) -> str:
-        return f'[{self.id}] {self.title}'
+        return f'[{self.pk}] {self.title}'
 
 
 class LessonViewInfo(models.Model):
