@@ -10,6 +10,7 @@
 ### Стек:
 
 - `Django REST Framework`
+- `pydantic-settings`
 - `PostgreSQL`
 - `Celery`
 - `RabbitMQ`
