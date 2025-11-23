@@ -1,49 +1,80 @@
-version: "3.8"
-name: 'learning-platform'
+name: "learning-platform"
+
+x-common-backend-env: &common-backend-env
+  DJANGO_SECRET_KEY:
+  DJANGO_DEBUG:
+  DJANGO_SUPERUSER_USERNAME:
+  DJANGO_SUPERUSER_EMAIL:
+  DJANGO_SUPERUSER_PASSWORD:
+
+  EMAIL_HOST_USER:
+  EMAIL_HOST_PASSWORD:
+
+  POSTGRES_USER:
+  POSTGRES_PASSWORD:
+  POSTGRES_DB:
+  POSTGRES_HOST:
+  POSTGRES_PORT:
+
+  RABBITMQ_DEFAULT_USER:
+  RABBITMQ_DEFAULT_PASS:
+  RABBITMQ_HOST:
+  RABBITMQ_PORT:
+
+  REDIS_HOST:
+  REDIS_PORT:
+  REDIS_DB:
+
 
 services:
-  app:
-    build: .
+  backend:
+    build: ./
+    image: lp-backend:dev
     command: >
       bash -c "python manage.py migrate &&
                (python manage.py createsuperuser --noinput || true) &&
                python manage.py runserver 0.0.0.0:8000"
-    env_file:
-      - .env
+    environment:
+      <<: *common-backend-env
     ports:
       - "8000:8000"
+    depends_on:
+      - postgres
     volumes:
       - ./:/proj
-    depends_on:
-      - pgdb
 
-  pgdb:
-    image: postgres:15.4-alpine3.18
-    env_file:
-      - .env
+  postgres:
+    image: postgres:17.6-alpine3.22
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
     ports:
-      - "${POSTGRES_PORT}:5432"
+      - "5432:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data/
 
   celery:
-    build: .
+    image: lp-backend:dev
     command: "celery -A core worker -l info"
+    environment:
+      <<: *common-backend-env
     depends_on:
-      - app
+      - backend
       - rabbitmq
       - redis
 
   rabbitmq:
-    image: rabbitmq:3.12.7-management-alpine
-    env_file:
-      - .env
+    image: rabbitmq:4.2.0-management-alpine
+    environment:
+      - RABBITMQ_DEFAULT_USER
+      - RABBITMQ_DEFAULT_PASS
     ports:
       - "5672:5672"
       - "15672:15672"
 
   redis:
-    image: redis:alpine3.18
+    image: redis:8.4-rc1-alpine3.22
     ports:
       - "6379:6379"
 
